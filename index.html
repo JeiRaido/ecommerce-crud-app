@@ -6,24 +6,15 @@
   <title>J4R Box | Dark Mode Game Store</title>
   <meta name="description" content="J4R Box — Demo game store (dark gamer UI). Cart, login, admin tools, and animated cursor background." />
   <meta name="theme-color" content="#07111a" />
-
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
-
-  <!-- Tailwind CDN (as in original) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- GSAP for new mouse trail -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.14.2/TweenMax.min.js"></script>
-
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- New mouse trail canvas (background) -->
   <canvas id="c"></canvas>
   <div class="message">Move your mouse around the screen.</div>
 
-  <!-- HEADER -->
   <header class="sticky top-0 z-50 bg-transparent/0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-16">
@@ -35,37 +26,30 @@
           </div>
           <span class="ml-3 px-2 py-0.5 text-xs rounded bg-white/4 text-slate-300 border border-white/6">Demo</span>
         </div>
-
         <nav class="hidden md:flex items-center gap-6 text-sm text-slate-300">
           <a href="#shop" class="hover:text-white">Shop</a>
           <a href="#about" class="hover:text-white">About</a>
           <a href="#contact" class="hover:text-white">Contact</a>
           <button id="openGuideBtn" class="hover:text-white">Setup</button>
         </nav>
-
         <div class="flex items-center gap-3">
           <button id="btnSearch" class="p-2 rounded-md hover:bg-white/3" title="Search">
             <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-
           <button id="btnAccount" class="p-2 rounded-md hover:bg-white/3 flex items-center gap-2">
             <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span id="accountLabel" class="text-sm text-slate-200">Login</span>
           </button>
-
           <button id="btnCart" class="relative p-2 rounded-md hover:bg-white/3">
             <svg class="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span id="cartCount" class="absolute -top-1 -right-1 bg-blue-400 text-black text-xs px-2 rounded-full">0</span>
           </button>
-
           <button id="btnMobileMenu" class="md:hidden p-2 rounded-md hover:bg-white/3">
             <svg class="w-6 h-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       </div>
     </div>
-
-    <!-- mobile nav -->
     <div id="mobileNav" class="md:hidden hidden bg-[#05111a] border-t border-white/4">
       <div class="px-4 py-3 flex flex-col gap-1">
         <a href="#shop" class="py-2">Shop</a>
@@ -76,24 +60,18 @@
     </div>
   </header>
 
-  <!-- MAIN -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 pb-20 w-full">
-
-    <!-- HERO -->
     <section id="home" class="mt-8 grid md:grid-cols-2 gap-8 items-center">
       <div class="space-y-4">
         <div class="text-slate-300">Welcome to</div>
         <h1 class="text-4xl md:text-5xl font-extrabold neon">J4R Box</h1>
         <p class="text-slate-400 max-w-xl">Premium games, reliable top-ups and gaming gear. Demo storefront with admin tools, cart, and login simulation. Currency: Philippine Peso (₱).</p>
-
         <div class="flex items-center gap-3">
           <a href="#shop" class="px-4 py-2 rounded btn-accent font-semibold shadow-sm">Browse Shop</a>
           <button id="ctaLogin" class="px-4 py-2 border border-white/6 rounded text-slate-200 hover:bg-white/3">Login / Register</button>
         </div>
-
         <div class="mt-2 text-xs text-slate-500">Backend: <span id="backendUrlLabel" class="font-mono text-slate-300">local</span></div>
       </div>
-
       <div class="relative">
         <div class="card p-4 rounded-lg glow-outline">
           <div class="grid grid-cols-3 gap-3">
@@ -108,14 +86,12 @@
       </div>
     </section>
 
-    <!-- SHOP CONTROLS -->
     <section id="shop" class="mt-12">
       <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
         <div>
           <h2 class="text-2xl font-bold">Shop</h2>
           <p class="text-slate-400">Browse, search, sort, and add items to your cart. Admins can add / edit / delete products.</p>
         </div>
-
         <div class="flex flex-wrap items-center gap-3">
           <input id="searchInput" placeholder="Search games, accessories..." class="px-3 py-2 rounded bg-transparent border border-white/5 w-64 text-slate-200" />
           <select id="categoryFilter" class="px-3 py-2 rounded bg-transparent border border-white/5 text-slate-200">
@@ -125,7 +101,7 @@
             <option value="currency">In-game Currency</option>
             <option value="accessory">Accessories</option>
           </select>
-          <select id="sortSelect" class="pnox-3 py-2 rounded bg-transparent border border-white/5 text-slate-200">
+          <select id="sortSelect" class="px-3 py-2 rounded bg-transparent border border-white/5 text-slate-200">
             <option value="featured">Sort: Featured</option>
             <option value="price-asc">Price: Low to High</option>
             <option value="price-desc">Price: High to Low</option>
@@ -134,19 +110,12 @@
           </select>
         </div>
       </div>
-
-      <!-- Product grid -->
-      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        <!-- JS injected content -->
-      </div>
-
-      <!-- ADMIN TOOLS -->
+      <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
       <div id="adminPanel" class="mt-12 hidden">
         <div class="flex items-center justify-between mb-4">
           <h3 class="text-xl font-semibold">Admin Tools (Product CRUD)</h3>
           <span id="adminModeBadge" class="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">Admin: OFF</span>
         </div>
-
         <div class="grid lg:grid-cols-2 gap-6">
           <form id="productForm" class="card p-4 rounded-lg">
             <h4 class="font-medium mb-2">Create / Update Product</h4>
@@ -155,7 +124,6 @@
               <label class="text-xs text-slate-300">Name</label>
               <input id="prodName" class="w-full px-3 py-2 rounded" placeholder="e.g., Elden Ring (PC)" />
             </div>
-
             <div class="space-y-2 mt-2">
               <label class="text-xs text-slate-300">Category</label>
               <select id="prodCategory" class="w-full px-3 py-2 rounded">
@@ -165,7 +133,6 @@
                 <option value="accessory">Accessory</option>
               </select>
             </div>
-
             <div class="grid grid-cols-2 gap-3 mt-3">
               <div>
                 <label class="text-xs text-slate-300">Price (PHP)</label>
@@ -176,26 +143,21 @@
                 <input id="prodStock" type="number" step="1" min="0" class="w-full px-3 py-2 rounded" />
               </div>
             </div>
-
             <div class="mt-3">
               <label class="text-xs text-slate-300">Image URL / relative path</label>
               <input id="prodImage" class="w-full px-3 py-2 rounded" placeholder="./images/elden.jpg" />
             </div>
-
             <div class="mt-3">
               <label class="text-xs text-slate-300">Description</label>
               <textarea id="prodDesc" rows="3" class="w-full px-3 py-2 rounded"></textarea>
             </div>
-
             <div class="mt-4 flex gap-3">
               <button id="saveProductBtn" class="px-4 py-2 rounded btn-accent">Save Product</button>
               <button id="resetProductBtn" type="button" class="px-4 py-2 rounded border">Reset</button>
               <button id="seedMoreBtn" type="button" class="ml-auto px-3 py-2 rounded border text-xs text-slate-300">Seed +10</button>
             </div>
-
             <p class="text-xs text-slate-400 mt-2">If you have a remote API set in Settings, create/update/delete will call it. Otherwise actions persist locally.</p>
           </form>
-
           <div class="card p-4 rounded-lg">
             <h4 class="font-medium mb-2">Product List (Edit / Delete)</h4>
             <div id="adminProductList" class="divide-y divide-white/5 max-h-80 overflow-y-auto"></div>
@@ -204,7 +166,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="mt-12">
       <div class="card p-6 rounded-lg">
         <h3 class="text-xl font-semibold">About J4R Box</h3>
@@ -217,7 +178,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="mt-12 grid lg:grid-cols-2 gap-6">
       <div class="card p-4 rounded-lg">
         <h3 class="font-semibold">Contact Us</h3>
@@ -228,7 +188,6 @@
           <div>Email: support@j4r-box.example</div>
         </div>
       </div>
-
       <form id="contactForm" class="card p-4 rounded-lg">
         <h4 class="font-medium">Send us a message</h4>
         <input id="contactName" placeholder="Your name" class="w-full mt-3 px-3 py-2 rounded" />
@@ -241,10 +200,8 @@
         <p class="text-xs text-slate-400 mt-2">Demo form — shows a toast and clears.</p>
       </form>
     </section>
-
   </main>
 
-  <!-- FOOTER -->
   <footer class="mt-12 border-t border-white/5">
     <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
       <div>© <span id="year"></span> J4R Box — Demo storefront</div>
@@ -256,7 +213,6 @@
     </div>
   </footer>
 
-  <!-- CART DRAWER -->
   <div id="cartDrawer" class="fixed inset-0 z-50 hidden">
     <div id="cartBackdrop" class="absolute inset-0 bg-black/50"></div>
     <aside class="absolute right-0 top-0 h-full w-full sm:w-[420px] bg-gradient-to-b from-[#081021] to-[#071225] drawer drawer-closed">
@@ -264,9 +220,7 @@
         <h3 class="font-semibold neon">Your Cart</h3>
         <button id="closeCart" class="p-2 rounded hover:bg-white/3">✕</button>
       </div>
-
       <div id="cartItems" class="p-4 space-y-3 overflow-y-auto h-[calc(100%-200px)]"></div>
-
       <div class="border-t border-white/6 p-4">
         <div class="flex items-center justify-between text-sm mb-3">
           <span>Subtotal</span>
@@ -280,7 +234,6 @@
     </aside>
   </div>
 
-  <!-- AUTH MODAL -->
   <div id="authModal" class="fixed inset-0 z-60 hidden">
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="absolute inset-0 grid place-items-center p-4">
@@ -289,7 +242,6 @@
           <h3 id="authTitle" class="font-semibold text-lg">Login</h3>
           <button id="closeAuth" class="p-2 rounded hover:bg-white/3">✕</button>
         </div>
-
         <form id="loginForm" class="space-y-3">
           <div>
             <label class="text-xs text-slate-300">Email</label>
@@ -302,7 +254,6 @@
           <button class="w-full btn-accent py-2 rounded" type="submit">Login</button>
           <p class="text-sm text-center text-slate-400">No account? <button id="switchToRegister" type="button" class="text-sky-300 underline">Register</button></p>
         </form>
-
         <form id="registerForm" class="space-y-3 hidden">
           <div>
             <label class="text-xs text-slate-300">Name</label>
@@ -319,13 +270,11 @@
           <button class="w-full btn-accent py-2 rounded" type="submit">Create Account</button>
           <p class="text-sm text-center text-slate-400">Have an account? <button id="switchToLogin" type="button" class="text-sky-300 underline">Login</button></p>
         </form>
-
         <p class="text-xs text-slate-400 mt-3">This demo tries your Render API if configured; otherwise it uses local simulation.</p>
       </div>
     </div>
   </div>
 
-  <!-- SETTINGS -->
   <div id="settingsModal" class="fixed inset-0 z-60 hidden">
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="absolute inset-0 grid place-items-center p-4">
@@ -350,7 +299,6 @@
     </div>
   </div>
 
-  <!-- GUIDE -->
   <div id="guideModal" class="fixed inset-0 z-60 hidden">
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="absolute inset-0 grid place-items-center p-4">
@@ -376,10 +324,8 @@
     </div>
   </div>
 
-  <!-- TOAST -->
   <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded shadow-lg"></div>
 
-  <!-- ================= JAVASCRIPT ================= -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
