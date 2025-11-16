@@ -3,44 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>J4R Box | Your Ultimate Game Store</title>
-  <meta name="description" content="J4R Box — Your one-stop shop for premium games, reliable top-ups, and essential gaming gear." />
+  <title>J4R Box | Dark Mode Game Store</title>
+  <meta name="description" content="J4R Box — Demo game store (dark gamer UI). Cart, login, admin tools, and animated cursor background." />
   <meta name="theme-color" content="#07111a" />
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css" />
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CDN (as in original) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- GSAP for mouse trail -->
+  <!-- GSAP for new mouse trail -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.14.2/TweenMax.min.js"></script>
 
 </head>
 <body class="min-h-screen flex flex-col">
 
-  <!-- Mouse trail canvas -->
+  <!-- New mouse trail canvas (background) -->
   <canvas id="c"></canvas>
+  <div class="message">Move your mouse around the screen.</div>
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-50 bg-transparent/0 backdrop-blur-sm">
+  <header class="sticky top-0 z-50 bg-transparent/0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="flex items-center justify-between h-16">
-        <a href="#shop" class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
           <img src="./images/logo.png" alt="J4R Box logo" class="w-10 h-10 object-contain rounded-sm" />
           <div class="logo-label">
             <div class="text-lg font-bold neon">J4R Box</div>
             <div class="text-xs text-slate-400 -mt-1">Game Store</div>
           </div>
-        </a>
+          <span class="ml-3 px-2 py-0.5 text-xs rounded bg-white/4 text-slate-300 border border-white/6">Demo</span>
+        </div>
 
         <nav class="hidden md:flex items-center gap-6 text-sm text-slate-300">
           <a href="#shop" class="hover:text-white">Shop</a>
           <a href="#about" class="hover:text-white">About</a>
           <a href="#contact" class="hover:text-white">Contact</a>
+          <button id="openGuideBtn" class="hover:text-white">Setup</button>
         </nav>
 
         <div class="flex items-center gap-3">
+          <button id="btnSearch" class="p-2 rounded-md hover:bg-white/3" title="Search">
+            <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 21l-4.35-4.35" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
           <button id="btnAccount" class="p-2 rounded-md hover:bg-white/3 flex items-center gap-2">
             <svg class="w-5 h-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15.75 6a3.75 3.75 0 1 1-7.5 0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span id="accountLabel" class="text-sm text-slate-200">Login</span>
@@ -64,37 +71,53 @@
         <a href="#shop" class="py-2">Shop</a>
         <a href="#about" class="py-2">About</a>
         <a href="#contact" class="py-2">Contact</a>
+        <button id="openGuideBtnMobile" class="text-left py-2">Setup</button>
       </div>
     </div>
   </header>
-  
-  <!-- HERO -->
-  <section id="home" class="h-screen -mt-16 flex items-center justify-center text-center">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <div class="space-y-4">
-          <h1 class="text-5xl md:text-7xl font-extrabold neon">One Stop, All Games.</h1>
-          <p class="text-slate-300 max-w-xl mx-auto text-lg">Your ultimate hub for digital keys, physical copies, and in-game currency. Get back in the game, faster.</p>
-          <div class="flex items-center justify-center gap-4 pt-4">
-              <a href="#shop" class="px-6 py-3 rounded btn-accent font-semibold shadow-lg text-lg">Browse The Shop</a>
-              <button id="ctaLogin" class="px-6 py-3 border border-white/6 rounded text-slate-200 hover:bg-white/3 text-lg">Login / Register</button>
-          </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- MAIN CONTENT WRAPPER -->
+  <!-- MAIN -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 pb-20 w-full">
 
-    <!-- SHOP -->
-    <section id="shop" class="pt-20">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+    <!-- HERO -->
+    <section id="home" class="mt-8 grid md:grid-cols-2 gap-8 items-center">
+      <div class="space-y-4">
+        <div class="text-slate-300">Welcome to</div>
+        <h1 class="text-4xl md:text-5xl font-extrabold neon">J4R Box</h1>
+        <p class="text-slate-400 max-w-xl">Premium games, reliable top-ups and gaming gear. Demo storefront with admin tools, cart, and login simulation. Currency: Philippine Peso (₱).</p>
+
+        <div class="flex items-center gap-3">
+          <a href="#shop" class="px-4 py-2 rounded btn-accent font-semibold shadow-sm">Browse Shop</a>
+          <button id="ctaLogin" class="px-4 py-2 border border-white/6 rounded text-slate-200 hover:bg-white/3">Login / Register</button>
+        </div>
+
+        <div class="mt-2 text-xs text-slate-500">Backend: <span id="backendUrlLabel" class="font-mono text-slate-300">local</span></div>
+      </div>
+
+      <div class="relative">
+        <div class="card p-4 rounded-lg glow-outline">
+          <div class="grid grid-cols-3 gap-3">
+            <div class="h-28 rounded img-fallback">Elden</div>
+            <div class="h-28 rounded img-fallback">GOW</div>
+            <div class="h-28 rounded img-fallback">Valorant</div>
+            <div class="h-28 rounded img-fallback">MC</div>
+            <div class="h-28 rounded img-fallback">Switch</div>
+            <div class="h-28 rounded img-fallback">Razer</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP CONTROLS -->
+    <section id="shop" class="mt-12">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
         <div>
-          <h2 class="text-3xl font-bold">The Shop</h2>
-          <p class="text-slate-400">Find your next adventure or top-up your favorite game.</p>
+          <h2 class="text-2xl font-bold">Shop</h2>
+          <p class="text-slate-400">Browse, search, sort, and add items to your cart. Admins can add / edit / delete products.</p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3">
-          <input id="searchInput" placeholder="Search games, accessories..." class="px-3 py-2 rounded bg-transparent border border-white/5 w-full sm:w-64 text-slate-200" />
+          <input id="searchInput" placeholder="Search games, accessories..." class="px-3 py-2 rounded bg-transparent border border-white/5 w-64 text-slate-200" />
           <select id="categoryFilter" class="px-3 py-2 rounded bg-transparent border border-white/5 text-slate-200">
             <option value="all">All Categories</option>
             <option value="virtual">Virtual Games</option>
@@ -116,28 +139,23 @@
       <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <!-- JS injected content -->
       </div>
-      
-      <!-- Coming Soon -->
-      <div class="mt-12 text-center">
-        <div class="card inline-block p-4 px-6 rounded-lg">
-          <h4 class="text-xl font-semibold neon">More Gear Incoming...</h4>
-          <p class="text-slate-400">New arrivals and restocks are on the way. Check back soon!</p>
-        </div>
-      </div>
 
       <!-- ADMIN TOOLS -->
-      <div id="adminPanel" class="mt-16 hidden">
+      <div id="adminPanel" class="mt-12 hidden">
         <div class="flex items-center justify-between mb-4">
-          <h3 class="text-xl font-semibold">Admin Tools (Product Management)</h3>
+          <h3 class="text-xl font-semibold">Admin Tools (Product CRUD)</h3>
+          <span id="adminModeBadge" class="text-xs px-2 py-1 rounded bg-white/5 text-slate-300">Admin: OFF</span>
         </div>
+
         <div class="grid lg:grid-cols-2 gap-6">
           <form id="productForm" class="card p-4 rounded-lg">
-             <h4 class="font-medium mb-2">Create / Update Product</h4>
+            <h4 class="font-medium mb-2">Create / Update Product</h4>
             <input type="hidden" id="prodId" />
             <div class="space-y-2">
               <label class="text-xs text-slate-300">Name</label>
               <input id="prodName" class="w-full px-3 py-2 rounded" placeholder="e.g., Elden Ring (PC)" />
             </div>
+
             <div class="space-y-2 mt-2">
               <label class="text-xs text-slate-300">Category</label>
               <select id="prodCategory" class="w-full px-3 py-2 rounded">
@@ -147,6 +165,7 @@
                 <option value="accessory">Accessory</option>
               </select>
             </div>
+
             <div class="grid grid-cols-2 gap-3 mt-3">
               <div>
                 <label class="text-xs text-slate-300">Price (PHP)</label>
@@ -157,19 +176,26 @@
                 <input id="prodStock" type="number" step="1" min="0" class="w-full px-3 py-2 rounded" />
               </div>
             </div>
+
             <div class="mt-3">
               <label class="text-xs text-slate-300">Image URL / relative path</label>
               <input id="prodImage" class="w-full px-3 py-2 rounded" placeholder="./images/elden.jpg" />
             </div>
+
             <div class="mt-3">
               <label class="text-xs text-slate-300">Description</label>
               <textarea id="prodDesc" rows="3" class="w-full px-3 py-2 rounded"></textarea>
             </div>
+
             <div class="mt-4 flex gap-3">
               <button id="saveProductBtn" class="px-4 py-2 rounded btn-accent">Save Product</button>
               <button id="resetProductBtn" type="button" class="px-4 py-2 rounded border">Reset</button>
+              <button id="seedMoreBtn" type="button" class="ml-auto px-3 py-2 rounded border text-xs text-slate-300">Seed +10</button>
             </div>
+
+            <p class="text-xs text-slate-400 mt-2">If you have a remote API set in Settings, create/update/delete will call it. Otherwise actions persist locally.</p>
           </form>
+
           <div class="card p-4 rounded-lg">
             <h4 class="font-medium mb-2">Product List (Edit / Delete)</h4>
             <div id="adminProductList" class="divide-y divide-white/5 max-h-80 overflow-y-auto"></div>
@@ -179,48 +205,49 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="mt-20">
+    <section id="about" class="mt-12">
       <div class="card p-6 rounded-lg">
-        <h3 class="text-2xl font-semibold">Why J4R Box?</h3>
-        <p class="text-slate-300 mt-3 max-w-3xl">Tired of jumping between different sites and launchers just to buy a game or top-up your account? We were too. J4R Box was built by gamers, for gamers, to be the single, trusted place for all your digital and physical gaming needs. We offer:</p>
-        <ul class="mt-4 list-disc ml-6 text-slate-300 grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
-          <li>Instant delivery for digital game keys.</li>
-          <li>Fast, reliable shipping for physical goods.</li>
-          <li>Secure top-ups for your favorite online games.</li>
-          <li>A curated selection of high-quality accessories.</li>
+        <h3 class="text-xl font-semibold">About J4R Box</h3>
+        <p class="text-slate-400 mt-2">J4R Box is a demo storefront to showcase a full-stack CRUD experience with a modern dark UI and animated background. Use it to present or prototype an e-commerce flow.</p>
+        <ul class="mt-3 list-disc ml-6 text-slate-400">
+          <li>Digital & Physical games</li>
+          <li>Top-ups and accessories</li>
+          <li>Admin tools for product management</li>
         </ul>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="mt-20 grid lg:grid-cols-2 gap-6">
-      <div class="card p-6 rounded-lg">
-        <h3 class="text-xl font-semibold">Get In Touch</h3>
-        <p class="text-slate-400 mt-2">Have a question or need support? We're here for you.</p>
-        <div class="mt-4 text-slate-300 space-y-2">
-          <div><span class="font-semibold text-slate-200">Address:</span> Port Road, Margosatubig, Zamboanga del Sur, Mindanao, Philippines</div>
-          <div><span class="font-semibold text-slate-200">Hours:</span> 24/7 Online Support</div>
-          <div><span class="font-semibold text-slate-200">Phone:</span> 0945 396 7929</div>
-          <div><span class="font-semibold text-slate-200">Email:</span> j4rdbox@gmail.com</div>
+    <section id="contact" class="mt-12 grid lg:grid-cols-2 gap-6">
+      <div class="card p-4 rounded-lg">
+        <h3 class="font-semibold">Contact Us</h3>
+        <p class="text-slate-400 mt-2">Assumed store: Manila, Philippines</p>
+        <div class="mt-3 text-slate-400 text-sm">
+          <div>Hours: 10:00 - 20:00</div>
+          <div>Phone: +63 900 000 0000</div>
+          <div>Email: support@j4r-box.example</div>
         </div>
       </div>
-      <form id="contactForm" class="card p-6 rounded-lg">
-        <h4 class="text-xl font-semibold">Send a Message</h4>
-        <input id="contactName" placeholder="Your name" class="w-full mt-4 px-3 py-2 rounded" />
+
+      <form id="contactForm" class="card p-4 rounded-lg">
+        <h4 class="font-medium">Send us a message</h4>
+        <input id="contactName" placeholder="Your name" class="w-full mt-3 px-3 py-2 rounded" />
         <input id="contactEmail" placeholder="Email" type="email" class="w-full mt-3 px-3 py-2 rounded" />
-        <textarea id="contactMsg" rows="4" placeholder="Your message..." class="w-full mt-3 px-3 py-2 rounded"></textarea>
+        <textarea id="contactMsg" rows="4" placeholder="Message" class="w-full mt-3 px-3 py-2 rounded"></textarea>
         <div class="mt-3 flex gap-2">
-          <button class="px-4 py-2 btn-accent rounded">Send Message</button>
+          <button class="px-4 py-2 btn-accent rounded">Send</button>
           <button type="reset" class="px-4 py-2 rounded border">Reset</button>
         </div>
+        <p class="text-xs text-slate-400 mt-2">Demo form — shows a toast and clears.</p>
       </form>
     </section>
+
   </main>
 
   <!-- FOOTER -->
-  <footer class="mt-20 border-t border-white/5">
+  <footer class="mt-12 border-t border-white/5">
     <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center text-sm text-slate-400">
-      <div>© <span id="year"></span> J4R Box. All Rights Reserved.</div>
+      <div>© <span id="year"></span> J4R Box — Demo storefront</div>
       <div class="flex items-center gap-4 mt-2 md:mt-0">
         <a href="#shop" class="hover:text-white">Shop</a>
         <a href="#about" class="hover:text-white">About</a>
@@ -237,7 +264,9 @@
         <h3 class="font-semibold neon">Your Cart</h3>
         <button id="closeCart" class="p-2 rounded hover:bg-white/3">✕</button>
       </div>
+
       <div id="cartItems" class="p-4 space-y-3 overflow-y-auto h-[calc(100%-200px)]"></div>
+
       <div class="border-t border-white/6 p-4">
         <div class="flex items-center justify-between text-sm mb-3">
           <span>Subtotal</span>
@@ -250,7 +279,7 @@
       </div>
     </aside>
   </div>
-  
+
   <!-- AUTH MODAL -->
   <div id="authModal" class="fixed inset-0 z-60 hidden">
     <div class="absolute inset-0 bg-black/60"></div>
@@ -258,8 +287,9 @@
       <div class="max-w-md w-full card p-6 rounded-lg modal-pop">
         <div class="flex items-center justify-between mb-4">
           <h3 id="authTitle" class="font-semibold text-lg">Login</h3>
-          <button id="closeAuth" class="p-2 rounded hover:bg-white/3 font-sans" aria-hidden="true">✕</button>
+          <button id="closeAuth" class="p-2 rounded hover:bg-white/3">✕</button>
         </div>
+
         <form id="loginForm" class="space-y-3">
           <div>
             <label class="text-xs text-slate-300">Email</label>
@@ -272,30 +302,84 @@
           <button class="w-full btn-accent py-2 rounded" type="submit">Login</button>
           <p class="text-sm text-center text-slate-400">No account? <button id="switchToRegister" type="button" class="text-sky-300 underline">Register</button></p>
         </form>
+
         <form id="registerForm" class="space-y-3 hidden">
           <div>
             <label class="text-xs text-slate-300">Name</label>
-            <input id="regName" class="w-full px-3 py-2 rounded" required />
+            <input id="regName" class="w-full px-3 py-2 rounded" />
           </div>
           <div>
             <label class="text-xs text-slate-300">Email</label>
-            <input id="regEmail" type="email" class="w-full px-3 py-2 rounded" required />
+            <input id="regEmail" type="email" class="w-full px-3 py-2 rounded" />
           </div>
           <div>
             <label class="text-xs text-slate-300">Password</label>
-            <input id="regPassword" type="password" minlength="6" class="w-full px-3 py-2 rounded" required />
+            <input id="regPassword" type="password" minlength="6" class="w-full px-3 py-2 rounded" />
           </div>
           <button class="w-full btn-accent py-2 rounded" type="submit">Create Account</button>
           <p class="text-sm text-center text-slate-400">Have an account? <button id="switchToLogin" type="button" class="text-sky-300 underline">Login</button></p>
         </form>
+
+        <p class="text-xs text-slate-400 mt-3">This demo tries your Render API if configured; otherwise it uses local simulation.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="settingsModal" class="fixed inset-0 z-60 hidden">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 grid place-items-center p-4">
+      <div class="max-w-lg w-full card p-6 rounded-lg modal-pop">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold">API Settings</h3>
+          <button id="closeSettings" class="p-2 rounded hover:bg-white/3">✕</button>
+        </div>
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs text-slate-300">API Base URL (Render)</label>
+            <input id="apiBaseInput" placeholder="https://your-api.onrender.com" class="w-full px-3 py-2 rounded" />
+            <p class="text-xs text-slate-400 mt-1">Leave blank to use local demo data.</p>
+          </div>
+          <div class="flex gap-3">
+            <button id="saveApiBase" class="btn-accent px-4 py-2 rounded">Save</button>
+            <button id="testApiBtn" class="px-4 py-2 rounded border">Test API</button>
+          </div>
+          <div id="apiTestResult" class="text-xs text-slate-300"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE -->
+  <div id="guideModal" class="fixed inset-0 z-60 hidden">
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 grid place-items-center p-4">
+      <div class="max-w-3xl w-full card p-6 rounded-lg modal-pop">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-semibold neon">Step-by-step: Transform to Full Store</h3>
+            <p class="text-slate-400 mt-2 text-sm">Deploy a Node/Express backend with products and auth. Set the API base in Settings to connect this frontend.</p>
+            <ul class="mt-3 text-xs text-slate-300 list-disc ml-6">
+              <li>Auth: POST /api/auth/register, POST /api/auth/login</li>
+              <li>Products: GET /api/products, POST /api/products, PUT /api/products/:id, DELETE /api/products/:id</li>
+            </ul>
+          </div>
+          <button id="closeGuide" class="p-2 rounded hover:bg-white/3">✕</button>
+        </div>
+        <ol class="mt-4 list-decimal ml-6 text-sm text-slate-300">
+          <li>Implement API with Express + Mongoose.</li>
+          <li>Deploy backend to Render and set API base in Settings.</li>
+          <li>Use Admin Tools to seed or manage products.</li>
+        </ol>
+        <div class="text-xs text-slate-400 mt-3">Demo fallback keeps app functional locally if API is missing.</div>
       </div>
     </div>
   </div>
 
   <!-- TOAST -->
-  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded shadow-lg z-[70]"></div>
-  
-  <!-- JAVASCRIPT -->
+  <div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-2 rounded shadow-lg"></div>
+
+  <!-- ================= JAVASCRIPT ================= -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
