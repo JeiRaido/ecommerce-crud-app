@@ -1,149 +1,72 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+// 1. Import necessary packages
+require('dotenv').config(); 
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
 
+// 2. Initialize the Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors({ origin: "*" }));
-app.use(bodyParser.json());
+// 3. Setup Middleware
+app.use(cors());
+app.use(express.json()); // This replaces body-parser for JSON
 
-// MongoDB Connection
-mongoose.connect(
-  "mongodb+srv://JayRide:DZo7fM0Wa7OQ4EaL@it-1029.wad4dic.mongodb.net/?appName=IT-1029",
-  { useNewUrlParser: true, useUnifiedTopology: true }
-)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => console.error("❌ MongoDB error:", err));
+// 4. Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('Successfully connected to MongoDB'))
+  .catch(err => console.error('Could not connect to MongoDB...', err));
 
-// ===== Schemas =====
-const UserSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-});
+// ... THE REST OF YOUR SERVER.JS REMAINS THE SAME ...
+// (The Product Schema, the app.get, app.post routes, and app.listen are all correct)
 
-const ProductSchema = new mongoose.Schema({
-  name: String,
+// 5. Define the Product Schema and Model
+const productSchema = new mongoose.Schema({
+  name: { type: String, required: true },
   category: String,
   price: Number,
   stock: Number,
   image: String,
   description: String,
 });
+const Product = mongoose.model('Product', productSchema);
 
-const User = mongoose.model("User", UserSchema);
-const Product = mongoose.model("Product", ProductSchema);
-
-// ===== Routes =====
-
-// quick test route
-app.get("/", (req, res) => res.send("J4R GameVerse API online!"));
-
-// --- User Auth ---
-app.post("/api/auth/register", async (req, res) => {
+// 6. Define API Routes
+app.get('/api/products', async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-
-    const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ error: "Email already exists" });
-
-    const user = await User.create({ name, email, password });
-    res.json({ user, token: "dummy-token" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const products = await Product.find({});
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching products' });
   }
 });
-
-app.post("/api/auth/login", async (req, res) => {
+app.post('/api/products', async (req, res) => {
   try {
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email, password });
-    if (!user) return res.status(401).json({ error: "Invalid credentials" });
-
-    res.json({ user, token: "dummy-token" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const newProduct = new Product(req.body);
+    const savedProduct = await newProduct.save();
+    res.status(201).json(savedProduct);
+  } catch (error) {
+    res.status(400).json({ message: 'Error creating product', error });
   }
 });
-
-// --- Product CRUD ---
-
-// GET all products
-app.get("/api/products", async (req, res) => {
-  const products = await Product.find();
-  res.json(products);
-});
-
-// ADD product
-app.post("/api/products", async (req, res) => {
-  const newItem = await Product.create(req.body);
-  res.json(newItem);
-});
-
-// UPDATE product
-app.put("/api/products/:id", async (req, res) => {
-  const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updated);
-});
-
-// DELETE product
-app.delete("/api/products/:id", async (req, res) => {
-  await Product.findByIdAndDelete(req.params.id);
-  res.json({ message: "Product deleted" });
-});
-
-// ===== SEED ROUTE (auto add products to DB) =====
-app.get("/api/seed", async (req, res) => {
-  await Product.deleteMany({});
-  await Product.insertMany([
-    {
-      name: "Cyberpunk 2077",
-      category: "Game",
-      price: 1999,
-      stock: 10,
-      image: "images/cyber.jpg",
-      description: "Open-world RPG in Night City."
-    },
-    {
-      name: "Logitech G102 Mouse",
-      category: "Accessories",
-      price: 799,
-      stock: 25,
-      image: "images/mouse.jpg",
-      description: "RGB gaming mouse for gamers."
-    },
-    {
-      name: "Steam Wallet 1000",
-      category: "Wallet",
-      price: 1000,
-      stock: 999,
-      image: "images/steam.jpg",
-      description: "Steam credit for your library."
-    },
-    {
-      name: "Red Dead Redemption 2",
-      category: "Game",
-      price: 2499,
-      stock: 15,
-      image: "images/rdr2.jpg",
-      description: "Western open-world adventure."
-    },
-    {
-      name: "Razer BlackWidow Keyboard",
-      category: "Accessories",
-      price: 3999,
-      stock: 8,
-      image: "images/keyboard.jpg",
-      description: "Mechanical gaming keyboard."
+app.put('/api/products/:id', async (req, res) => {
+    try {
+        const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedProduct);
+    } catch (error) {
+        res.status(400).json({ message: 'Error updating product', error });
     }
-  ]);
-
-  res.send("Products inserted!");
+});
+app.delete('/api/products/:id', async (req, res) => {
+    try {
+        await Product.findByIdAndDelete(req.params.id);
+        res.json({ message: 'Product deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting product', error });
+    }
 });
 
-// ----- Start Server -----
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+// 7. Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
