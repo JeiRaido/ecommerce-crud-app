@@ -55,7 +55,6 @@ const demoProducts = [
   { _id: uid(), name: 'Nintendo Switch Pro Controller', category: 'accessory', price: 3495, stock: 15, image: './images/nintendo.jpeg', description: 'Official Pro Controller.' },
   { _id: uid(), name: 'NBA 2K24 (PS4)', category: 'physical', price: 1995, stock: 25, image: './images/nba.jpeg', description: 'Physical disc for PS4.' },
   { _id: uid(), name: 'Valorant Points 475', category: 'currency', price: 249, stock: 999, image: './images/valo.png', description: 'Direct top-up for Riot.' },
-  // additional demo items (placeholders)
   { _id: uid(), name: 'Cyberpunk Expansion Pack', category: 'virtual', price: 1299, stock: 60, image: './images/cyber.png', description: 'DLC pack with skins and missions.' },
   { _id: uid(), name: 'Logitech Pro 2', category: 'accessory', price: 2599, stock: 40, image: './images/mouse.png', description: 'High DPI programmable mouse.' },
   { _id: uid(), name: 'Steam Wallet ₱1000', category: 'currency', price: 1000, stock: 999, image: './images/steam.png', description: 'Steam wallet code.' },
